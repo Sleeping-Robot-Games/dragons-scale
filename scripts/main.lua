@@ -1,13 +1,17 @@
 player = {}
 fireballs = {}
 enemies = {}
+weapons = {}
 enemy_timer = 0
 
 function _init()
     player = {
         x = 10,
         y = 64,
-        speed = 2
+        speed = 2,
+        is_dashing = false,
+        dash_timer = 0,
+        dash_duration = 10
     }
 
     -- DEBUG spawn enemy:
@@ -18,50 +22,27 @@ function _update()
     player_movement()
 
     shoot_fireball()
-
-    enemies_shoot()
-
-    spawn_enemies()
-
-    move_enemies()
-
     -- Move fireballs
     for fireball in all(fireballs) do
         fireball.x += fireball.speed
     end
 
+    enemies_shoot()
+    enemies_reload()
+
+    spawn_enemies()
+    move_enemies()
     move_enemy_weapons()
 
-    -- Check collision between fireballs and enemies
-    for fireball in all(fireballs) do
-        for enemy in all(enemies) do
-            local fireball_left = fireball.x - 2
-            local fireball_right = fireball.x + 2
-            local fireball_top = fireball.y - 2
-            local fireball_bottom = fireball.y + 2
-
-            local enemy_left = enemy.x
-            local enemy_right = enemy.x + 8
-            local enemy_top = enemy.y
-            local enemy_bottom = enemy.y + 8
-
-            if fireball_left < enemy_right
-                    and fireball_right > enemy_left
-                    and fireball_top < enemy_bottom
-                    and fireball_bottom > enemy_top then
-                del(fireballs, fireball)
-                del(enemies, enemy)
-            end
-        end
-    end
+    check_fireball_and_enemy_collision()
+    check_player_and_enemy_collisions()
 end
 
 function _draw()
     -- Clear screen
     cls()
 
-    -- Draw player
-    draw_large_sprite(player.x, player.y, 1, 2)
+    draw_player()
 
     -- Draw fireballs
     for fireball in all(fireballs) do
@@ -72,7 +53,11 @@ function _draw()
     for enemy in all(enemies) do
         -- Draw enemy
         spr(63, enemy.x, enemy.y)
-        draw_weapon(enemy.weapon)
-        draw_ballon(enemy.ballon)
+        draw_balloon(enemy.balloon)
+        if (not enemy.weapon.shot) draw_weapon(enemy.weapon)
+    end
+
+    for weapon in all(weapons) do
+        draw_weapon(weapon)
     end
 end
