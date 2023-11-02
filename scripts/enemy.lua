@@ -91,7 +91,7 @@ function draw_balloon(balloon)
 end
 
 function draw_weapon(weapon)
-    spr(62, weapon.x, weapon.y)
+    spr(45, weapon.x, weapon.y)
 end
 
 function enemies_shoot()

@@ -35,7 +35,6 @@ function check_fireball_and_enemy_collision()
                 -- Collision with balloon logic here
                 del(fireballs, fireball)
                 enemy.balloon.popped = true
-                -- Optionally: del(enemies, enemy)
             end
         end
     end
@@ -49,9 +48,9 @@ function check_player_and_enemy_collisions()
         local enemy_bottom = enemy.y + 8
 
         local player_left = player.x + 4
-        local player_right = player.x + 14
-        local player_top = player.y + 4
-        local player_bottom = player.y + 12
+        local player_right = player.x + 16
+        local player_top = player.y - 4
+        local player_bottom = player.y + 4
 
         if enemy.balloon.popped
                 and player_left < enemy_right

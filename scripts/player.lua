@@ -1,8 +1,8 @@
 function player_movement()
     if (btn(0)) player.x = max(0, player.x - player.speed)
     if (btn(1)) player.x = min(128 - 16, player.x + player.speed)
-    if (btn(2)) player.y = max(0, player.y - player.speed)
-    if (btn(3)) player.y = min(128 - 16, player.y + player.speed)
+    if (btn(2)) player.y = max(8, player.y - player.speed)
+    if (btn(3)) player.y = min(128 - 8, player.y + player.speed)
     -- Start dashing
     if btnp(4) and not player.is_dashing then
         player.is_dashing = true
@@ -19,18 +19,59 @@ function player_movement()
             player.is_dashing = false
         end
     end
+
+    player.frame_timer += 1
+    -- Increment frame timer
 end
 
 function shoot_fireball()
     if btnp(5) then
-        add(fireballs, { x = player.x + 14, y = player.y + 8, speed = 3 })
+        add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3 })
+        player.is_shooting = true
+        player.frame_timer = 0
     end
 end
 
 -- TODO: Hold 5 to breath fire
 
 function draw_player()
-    local frame = 1
-    if (player.is_dashing) frame = 33
-    draw_large_sprite(player.x, player.y, frame, 2)
+    local top_wing_frames = { 1, 32, 48 }
+    local bottom_wing_frames = { 17, 33, 49 }
+    local mouth_frames = { 18, 16 }
+
+    local wing_frame_count = #top_wing_frames
+    local animation_speed = 10
+    local wing_frame_idx = flr(time() * animation_speed) % (2 * wing_frame_count - 2) + 1
+
+    -- Adjust index for pendulum animation
+    if wing_frame_idx > wing_frame_count then
+        wing_frame_idx = 2 * wing_frame_count - wing_frame_idx
+    end
+
+    local mouth_frame = mouth_frames[1]
+    if player.is_shooting then
+        if player.frame_timer < 5 then
+            mouth_frame = mouth_frames[2]
+        else
+            player.is_shooting = false
+        end
+    end
+
+    -- When dashing, hold the last frame
+    if player.is_dashing then
+        wing_frame_idx = wing_frame_count
+        mouth_frame = mouth_frames[2]
+    end
+
+    -- Set the frames
+    local top_wing_frame = top_wing_frames[wing_frame_idx]
+    local bottom_wing_frame = bottom_wing_frames[wing_frame_idx]
+
+    -- Draw the dragon
+    spr(top_wing_frame, player.x, player.y - 8)
+    spr(bottom_wing_frame, player.x, player.y)
+    -- Top of head
+    spr(2, player.x + 8, player.y - 8)
+    -- Mouth
+    spr(mouth_frame, player.x + 8, player.y)
 end

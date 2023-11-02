@@ -11,7 +11,10 @@ function _init()
         speed = 2,
         is_dashing = false,
         dash_timer = 0,
-        dash_duration = 10
+        dash_duration = 10,
+        is_shooting = false,
+        frame_timer = 0,
+        wing_state = 1
     }
 
     -- DEBUG spawn enemy:
@@ -40,7 +43,7 @@ end
 
 function _draw()
     -- Clear screen
-    cls()
+    cls(12)
 
     draw_player()
 
