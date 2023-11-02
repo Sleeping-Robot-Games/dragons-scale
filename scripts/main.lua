@@ -10,22 +10,16 @@ function _init()
         speed = 2
     }
 
-    -- DEBUG:
-    local y = rnd(128)
-    add(
-        enemies, {
-            x = 84,
-            y = y,
-            start_y = y,
-            offset = rnd(1000)
-        }
-    )
+    -- DEBUG spawn enemy:
+    spawn_enemy()
 end
 
 function _update()
     player_movement()
 
     shoot_fireball()
+
+    enemies_shoot()
 
     spawn_enemies()
 
@@ -35,6 +29,8 @@ function _update()
     for fireball in all(fireballs) do
         fireball.x += fireball.speed
     end
+
+    move_enemy_weapons()
 
     -- Check collision between fireballs and enemies
     for fireball in all(fireballs) do
@@ -76,16 +72,7 @@ function _draw()
     for enemy in all(enemies) do
         -- Draw enemy
         spr(63, enemy.x, enemy.y)
-        draw_weapon(enemy.x, enemy.y)
-        draw_ballon(enemy.x, enemy.y)
-    end
-
-    -- Visualize hitboxes
-    for fireball in all(fireballs) do
-        rect(fireball.x - 2, fireball.y - 2, fireball.x + 2, fireball.y + 2, 8)
-    end
-
-    for enemy in all(enemies) do
-        rect(enemy.x, enemy.y, enemy.x + 8, enemy.y + 8, 9)
+        draw_weapon(enemy.weapon)
+        draw_ballon(enemy.ballon)
     end
 end
