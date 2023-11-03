@@ -104,21 +104,7 @@ function _draw()
 
     for weapon in all(knight_weapons) do
         draw_knight_weapon(weapon)
-
-        local weapon_left = weapon.x
-        local weapon_right = weapon.x + 6
-        local weapon_top = weapon.y + 2
-        local weapon_bottom = weapon.y + 6
-        rect(weapon_left, weapon_top, weapon_right, weapon_bottom, 7) -- 8 is red color
     end
-
-    -- Draw player hitbox (for visualization)
-    local player_left = player.x + 4
-    local player_right = player.x + 16
-    local player_top = player.y - 4
-    local player_bottom = player.y + 4
-    rect(player_left, player_top, player_right, player_bottom, 7)
-    -- 11 is yellow color
 
     draw_health()
 end

@@ -31,14 +31,14 @@ end
 
 function damage_player(dmg)
     -- Only apply damage if player is not invincible
-    if player.invincible_timer <= 0 then
+    if player.invincible_timer <= 0 and not player.is_dashing then
         player.hp -= dmg
         player.invincible_timer = 30 -- Set player invincibility for 30 frames
     end
 end
 
 function shoot_fireball()
-    if btnp(5) then
+    if btnp(5) and player.invincible_timer <= 0 then
         add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3, fire_particles = {} })
         player.is_shooting = true
         player.frame_timer = 0
