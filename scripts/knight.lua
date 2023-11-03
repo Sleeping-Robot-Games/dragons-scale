@@ -13,7 +13,7 @@ function spawn_knight()
             type = 'knight',
             x = knight_x,
             y = knight_y,
-            hp = 4,
+            hp = 3,
             start_y = knight_y,
             offset = rnd(1000),
             shoot_timer = 0,

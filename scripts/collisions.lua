@@ -69,6 +69,28 @@ function check_player_and_knight_collisions()
                 and player_top < knight_bottom
                 and player_bottom > knight_top then
             del(knights, knight)
+        else
+        end
+    end
+end
+
+function check_player_and_knight_weapon_collisions()
+    for weapon in all(knight_weapons) do
+        local weapon_left = weapon.x
+        local weapon_right = weapon.x + 6
+        local weapon_top = weapon.y + 2
+        local weapon_bottom = weapon.y + 6
+
+        local player_left = player.x + 4
+        local player_right = player.x + 16
+        local player_top = player.y - 4
+        local player_bottom = player.y + 4
+
+        if player_left < weapon_right
+                and player_right > weapon_left
+                and player_top < weapon_bottom
+                and player_bottom > weapon_top then
+            damage_player(1)
         end
     end
 end

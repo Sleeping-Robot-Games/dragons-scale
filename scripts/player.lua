@@ -20,8 +20,21 @@ function player_movement()
         end
     end
 
-    player.frame_timer += 1
     -- Increment frame timer
+    player.frame_timer += 1
+
+    -- Decrease the invincibility timer if it's active
+    if player.invincible_timer > 0 then
+        player.invincible_timer -= 1
+    end
+end
+
+function damage_player(dmg)
+    -- Only apply damage if player is not invincible
+    if player.invincible_timer <= 0 then
+        player.hp -= dmg
+        player.invincible_timer = 30 -- Set player invincibility for 30 frames
+    end
 end
 
 function shoot_fireball()
@@ -67,11 +80,17 @@ function draw_player()
     local top_wing_frame = top_wing_frames[wing_frame_idx]
     local bottom_wing_frame = bottom_wing_frames[wing_frame_idx]
 
-    -- Draw the dragon
-    spr(top_wing_frame, player.x, player.y - 8)
-    spr(bottom_wing_frame, player.x, player.y)
-    -- Top of head
-    spr(2, player.x + 8, player.y - 8)
-    -- Mouth
-    spr(mouth_frame, player.x + 8, player.y)
+    -- If player is invincible, toggle flashing state
+    player.is_flashing = player.invincible_timer > 0 and flr(time() * 10) % 2 == 0
+
+    -- Draw the player only if not flashing
+    if not player.is_flashing then
+        -- Draw the dragon
+        spr(top_wing_frame, player.x, player.y - 8)
+        spr(bottom_wing_frame, player.x, player.y)
+        -- Top of head
+        spr(2, player.x + 8, player.y - 8)
+        -- Mouth
+        spr(mouth_frame, player.x + 8, player.y)
+    end
 end

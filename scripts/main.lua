@@ -9,7 +9,9 @@ function _init()
         x = 10,
         y = 64,
         speed = 2,
-        hp = 5,
+        hp = 6,
+        invincible_timer = 0,
+        is_flashing = false,
         is_dashing = false,
         dash_timer = 0,
         dash_duration = 10,
@@ -38,6 +40,7 @@ function _update()
     move_knights()
     move_knight_weapons()
 
+    check_player_and_knight_weapon_collisions()
     check_fireball_and_enemy_collision(knights)
     check_fireball_and_ballon_collision()
     check_player_and_knight_collisions()
@@ -101,7 +104,21 @@ function _draw()
 
     for weapon in all(knight_weapons) do
         draw_knight_weapon(weapon)
+
+        local weapon_left = weapon.x
+        local weapon_right = weapon.x + 6
+        local weapon_top = weapon.y + 2
+        local weapon_bottom = weapon.y + 6
+        rect(weapon_left, weapon_top, weapon_right, weapon_bottom, 7) -- 8 is red color
     end
+
+    -- Draw player hitbox (for visualization)
+    local player_left = player.x + 4
+    local player_right = player.x + 16
+    local player_top = player.y - 4
+    local player_bottom = player.y + 4
+    rect(player_left, player_top, player_right, player_bottom, 7)
+    -- 11 is yellow color
 
     draw_health()
 end
