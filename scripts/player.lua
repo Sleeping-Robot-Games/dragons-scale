@@ -26,7 +26,7 @@ end
 
 function shoot_fireball()
     if btnp(5) then
-        add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3 })
+        add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3, fire_particles = {} })
         player.is_shooting = true
         player.frame_timer = 0
     end
