@@ -77,30 +77,7 @@ function _draw()
         draw_fire_particles(fireball.fire_particles)
     end
 
-    -- Draw knights
-    for knight in all(knights) do
-        -- Draw knight
-        if knight.balloon.popped then
-            spr(62, knight.x, knight.y)
-        else
-            spr(63, knight.x, knight.y)
-        end
-        draw_balloon(knight.balloon)
-        if knight.balloon.hp < 2 and not knight.balloon.popped then
-            spawn_fire_particle(
-                knight.balloon.x + 8,
-                knight.balloon.y + 8,
-                knight.balloon.fire_particles,
-                8,
-                1,
-                2,
-                -1,
-                -0.25
-            )
-            draw_fire_particles(knight.balloon.fire_particles)
-        end
-        if (not knight.weapon.shot) draw_knight_weapon(knight.weapon)
-    end
+    draw_knights()
 
     for weapon in all(knight_weapons) do
         draw_knight_weapon(weapon)

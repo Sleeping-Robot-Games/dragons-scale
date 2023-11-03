@@ -37,6 +37,10 @@ function damage_player(dmg)
     end
 end
 
+function heal_player(amount)
+    player.hp = min(player.hp + amount, 6)
+end
+
 function shoot_fireball()
     if btnp(5) and player.invincible_timer <= 0 then
         add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3, fire_particles = {} })

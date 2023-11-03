@@ -63,13 +63,16 @@ function check_player_and_knight_collisions()
         local player_top = player.y - 4
         local player_bottom = player.y + 4
 
-        if knight.balloon.popped
-                and player_left < knight_right
+        if player_left < knight_right
                 and player_right > knight_left
                 and player_top < knight_bottom
                 and player_bottom > knight_top then
-            del(knights, knight)
-        else
+            if knight.balloon.popped and player.is_dashing then
+                heal_player(1)
+                del(knights, knight)
+            elseif not knight.balloon.popped then
+                damage_player(1)
+            end
         end
     end
 end

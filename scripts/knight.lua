@@ -18,6 +18,7 @@ function spawn_knight()
             offset = rnd(1000),
             shoot_timer = 0,
             reload_timer = 0,
+            damage_timer = 0,
             balloon = {
                 x = knight_x - 7,
                 y = knight_y - 18,
@@ -66,7 +67,41 @@ function move_knights()
                 -- Increment shoot timer
                 knight.shoot_timer += 1
             end
+
+            -- Decrease the damage timer if it's active
+            if knight.damage_timer > 0 then
+                knight.damage_timer -= 1
+            end
         end
+    end
+end
+
+function draw_knights()
+    for knight in all(knights) do
+        if knight.balloon.popped then
+            spr(62, knight.x, knight.y)
+        else
+            local sprite_id = 63
+            if knight.damage_timer > 0 and flr(time() * 10) % 2 == 0 then
+                sprite_id = 61
+            end
+            spr(sprite_id, knight.x, knight.y)
+        end
+        draw_balloon(knight.balloon)
+        if knight.balloon.hp < 2 and not knight.balloon.popped then
+            spawn_fire_particle(
+                knight.balloon.x + 8,
+                knight.balloon.y + 8,
+                knight.balloon.fire_particles,
+                8,
+                1,
+                2,
+                -1,
+                -0.25
+            )
+            draw_fire_particles(knight.balloon.fire_particles)
+        end
+        if (not knight.weapon.shot) draw_knight_weapon(knight.weapon)
     end
 end
 
