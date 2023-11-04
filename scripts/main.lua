@@ -5,20 +5,7 @@ knight_weapons = {}
 knight_timer = 0
 
 function _init()
-    player = {
-        x = 10,
-        y = 64,
-        speed = 2,
-        hp = 6,
-        invincible_timer = 0,
-        is_flashing = false,
-        is_dashing = false,
-        dash_timer = 0,
-        dash_duration = 10,
-        is_shooting = false,
-        frame_timer = 0,
-        wing_state = 1
-    }
+    init_player()
 
     -- DEBUG spawn first knight:
     spawn_knight()

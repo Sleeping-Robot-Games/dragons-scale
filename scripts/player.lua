@@ -1,3 +1,22 @@
+function init_player()
+    player = {
+        x = 10,
+        y = 64,
+        speed = 2,
+        hp = 6,
+        invincible_timer = 0,
+        is_flashing = false,
+        is_dashing = false,
+        dash_timer = 0,
+        dash_duration = 10,
+        is_shooting = false,
+        frame_timer = 0,
+        wing_state = 1,
+        fireball_timer = 0,
+        fireball_cd = 10
+    }
+end
+
 function player_movement()
     if (btn(0)) player.x = max(0, player.x - player.speed)
     if (btn(1)) player.x = min(128 - 16, player.x + player.speed)
@@ -24,6 +43,9 @@ function player_movement()
     -- Increment frame timer
     player.frame_timer += 1
 
+    -- Increment fireball timer
+    player.fireball_timer += 1
+
     -- Decrease the invincibility timer if it's active
     if player.invincible_timer > 0 then
         player.invincible_timer -= 1
@@ -43,11 +65,14 @@ function heal_player(amount)
 end
 
 function shoot_fireball()
-    -- TODO: Add cooldown. Unlock to make faster?
-    if btnp(5) and player.invincible_timer <= 0 then
+    -- TODO: Unlock to make cd faster?
+    if btnp(5) and player.fireball_timer > player.fireball_cd and player.invincible_timer <= 0 then
         add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3, fire_particles = {} })
         player.is_shooting = true
         player.frame_timer = 0
+        player.fireball_timer = 0
+
+        sfx(0)
     end
 end
 
