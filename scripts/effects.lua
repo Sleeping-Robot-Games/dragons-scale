@@ -28,3 +28,5 @@ function draw_fire_particles(fire_particles)
         circfill(particle.x, particle.y, particle.size, particle.color)
     end
 end
+
+-- TODO: Screen shake, with params for intensity and length

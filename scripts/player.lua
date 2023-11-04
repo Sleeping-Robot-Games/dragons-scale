@@ -9,6 +9,7 @@ function player_movement()
         player.dash_timer = 0
     end
 
+    -- TODO: Make the dash a mechanic needed for the boss fight
     -- Perform dash
     if player.is_dashing then
         player.x = min(128 - 16, player.x + 5)
@@ -42,6 +43,7 @@ function heal_player(amount)
 end
 
 function shoot_fireball()
+    -- TODO: Add cooldown. Unlock to make faster?
     if btnp(5) and player.invincible_timer <= 0 then
         add(fireballs, { x = player.x + 16, y = player.y + 2, speed = 3, fire_particles = {} })
         player.is_shooting = true
@@ -49,7 +51,7 @@ function shoot_fireball()
     end
 end
 
--- TODO: Hold 5 to breath fire
+-- TODO: Hold 5 to breath fire, this should be an unlockable ability
 
 function draw_player()
     local top_wing_frames = { 1, 32, 48 }
@@ -96,5 +98,22 @@ function draw_player()
         spr(2, player.x + 8, player.y - 8)
         -- Mouth
         spr(mouth_frame, player.x + 8, player.y)
+    end
+end
+
+function draw_fireballs()
+    for fireball in all(fireballs) do
+        circfill(fireball.x, fireball.y, 2, 9)
+        spawn_fire_particle(
+            fireball.x,
+            fireball.y,
+            fireball.fire_particles,
+            6,
+            1,
+            2,
+            -.5,
+            1
+        )
+        draw_fire_particles(fireball.fire_particles)
     end
 end

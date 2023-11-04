@@ -41,10 +41,8 @@ function check_fireball_and_ballon_collision()
                     and fireball.x + 2 > balloon_left
                     and fireball.y - 2 < balloon_bottom
                     and fireball.y + 2 > balloon_top then
-                -- Collision with balloon logic here
                 del(fireballs, fireball)
                 knight.balloon.hp -= 1
-                -- TODO: Add fire particle effects to damaged ballons in a draw function
                 if (knight.balloon.hp <= 0) knight.balloon.popped = true
             end
         end

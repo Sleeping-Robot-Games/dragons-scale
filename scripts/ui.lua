@@ -4,3 +4,6 @@ function draw_health()
         print('HP:', 0, 2, 7)
     end
 end
+
+-- TODO: Text box between fights and for cinematics
+-- TODO: Fire breath bar

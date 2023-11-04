@@ -133,6 +133,12 @@ function draw_knight_weapon(weapon)
     spr(45, weapon.x, weapon.y)
 end
 
+function draw_thrown_knight_weapons()
+    for weapon in all(knight_weapons) do
+        draw_knight_weapon(weapon)
+    end
+end
+
 function knights_shoot()
     for knight in all(knights) do
         -- shoot every 30 frames
