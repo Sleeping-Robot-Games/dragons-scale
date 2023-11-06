@@ -3,6 +3,10 @@ fireballs = {}
 knights = {}
 knight_weapons = {}
 knight_timer = 0
+rocks = {}
+
+shake_duration = 0
+shake_intensity = 0
 
 function _init()
     init_player()
@@ -32,19 +36,25 @@ function _update()
     check_fireball_and_ballon_collision()
     check_player_and_knight_collisions()
 
+    update_rocks()
+
     -- particle effects
     for knight in all(knights) do
         -- ballons on fire
-        update_fire_particles(knight.balloon.fire_particles)
+        update_particles(knight.balloon.fire_particles)
     end
 
     for fireball in all(fireballs) do
         -- fireball trails
-        update_fire_particles(fireball.fire_particles)
+        update_particles(fireball.fire_particles)
     end
+
+    update_shake()
 end
 
 function _draw()
+    apply_shake()
+
     -- Clear screen with blue background
     cls(12)
 
@@ -57,6 +67,8 @@ function _draw()
     draw_knights()
 
     draw_thrown_knight_weapons()
+
+    draw_rocks()
 
     draw_health()
 end

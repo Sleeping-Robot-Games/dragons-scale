@@ -75,6 +75,7 @@ function check_player_and_knight_collisions()
     end
 end
 
+-- TODO: refactor code to be projectile and use for weapons and rocks
 function check_player_and_knight_weapon_collisions()
     for weapon in all(knight_weapons) do
         local weapon_left = weapon.x

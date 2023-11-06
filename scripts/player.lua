@@ -57,6 +57,7 @@ function damage_player(dmg)
     if player.invincible_timer <= 0 and not player.is_dashing then
         player.hp -= dmg
         player.invincible_timer = 30 -- Set player invincibility for 30 frames
+        -- TODO: try sfx for getting hit
     end
 end
 
@@ -129,7 +130,7 @@ end
 function draw_fireballs()
     for fireball in all(fireballs) do
         circfill(fireball.x, fireball.y, 2, 9)
-        spawn_fire_particle(
+        spawn_particle(
             fireball.x,
             fireball.y,
             fireball.fire_particles,
@@ -137,8 +138,10 @@ function draw_fireballs()
             1,
             2,
             -.5,
-            1
+            1,
+            8,
+            2
         )
-        draw_fire_particles(fireball.fire_particles)
+        draw_particles(fireball.fire_particles)
     end
 end

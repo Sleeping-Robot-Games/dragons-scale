@@ -89,7 +89,7 @@ function draw_knights()
         end
         draw_balloon(knight.balloon)
         if knight.balloon.hp < 2 and not knight.balloon.popped then
-            spawn_fire_particle(
+            spawn_particle(
                 knight.balloon.x + 8,
                 knight.balloon.y + 8,
                 knight.balloon.fire_particles,
@@ -97,9 +97,11 @@ function draw_knights()
                 1,
                 2,
                 -1,
-                -0.25
+                -0.25,
+                8,
+                2
             )
-            draw_fire_particles(knight.balloon.fire_particles)
+            draw_particles(knight.balloon.fire_particles)
         end
         if (not knight.weapon.shot) draw_knight_weapon(knight.weapon)
     end
