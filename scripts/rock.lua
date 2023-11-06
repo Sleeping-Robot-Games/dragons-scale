@@ -9,7 +9,7 @@ function spawn_rock()
         sprite_index = 1, -- start with the first sprite
         sprite_timer = 0, -- a timer to manage sprite changes
         sprites = { 26, 27, 28, 29 }, -- list of sprite indexes to cycle through
-        animation_speed = 0.5 -- how fast the animation cycles
+        animation_speed = 0.4 -- how fast the animation cycles
     }
     add(rocks, rock)
 end
