@@ -36,7 +36,7 @@ function _update()
     check_fireball_and_ballon_collision()
     check_player_and_knight_collisions()
 
-    update_rocks()
+    -- update_rocks()
 
     -- particle effects
     for knight in all(knights) do
@@ -68,7 +68,7 @@ function _draw()
 
     draw_thrown_knight_weapons()
 
-    draw_rocks()
+    -- draw_rocks()
 
     draw_health()
 end
